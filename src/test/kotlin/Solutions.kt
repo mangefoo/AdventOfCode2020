@@ -5,7 +5,7 @@ class Solutions {
 
     @Test
     fun day1_1() {
-        val input = File("/Users/mager/devel/adventOfCode/Day 1/input").readLines().map {
+        val input = File("Day 1/input").readLines().map {
             it.toInt()
         }
 
@@ -21,7 +21,7 @@ class Solutions {
 
     @Test
     fun day1_2() {
-        val input = File("/Users/mager/devel/adventOfCode/Day 1/input").readLines().map {
+        val input = File("Day 1/input").readLines().map {
             it.toInt()
         }
 
@@ -46,7 +46,7 @@ class Solutions {
             count >= it.min && count <= it.max
         }
 
-        val count = File("/Users/mager/devel/adventOfCode/Day 2/input").readLines().map {
+        val count = File("Day 2/input").readLines().map {
             val line = it.split(" ")
             val rule = line[0].split("-")
             val char = line[1][0]
@@ -69,7 +69,7 @@ class Solutions {
 
         }
 
-        val count = File("/Users/mager/devel/adventOfCode/Day 2/input").readLines().map {
+        val count = File("Day 2/input").readLines().map {
             val line = it.split(" ")
             val rule = line[0].split("-")
             val char = line[1][0]
@@ -83,7 +83,7 @@ class Solutions {
 
     @Test
     fun day3_1() {
-        val count = File("/Users/mager/devel/adventOfCode/Day 3/input").readLines()
+        val count = File("Day 3/input").readLines()
                 .mapIndexed { i, row ->
                     row[(i * 3) % row.length]
                 }.filter { it == '#' }
@@ -96,7 +96,7 @@ class Solutions {
 
     @Test
     fun day3_2() {
-        val map = File("/Users/mager/devel/adventOfCode/Day 3/input").readLines()
+        val map = File("Day 3/input").readLines()
 
         val scenarios = listOf(Day3Input(1, 1), Day3Input(3, 1), Day3Input(5, 1), Day3Input(7, 1), Day3Input(1, 2))
 

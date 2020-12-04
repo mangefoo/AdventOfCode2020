@@ -143,22 +143,16 @@ class Solutions {
             else -> Height(0, "invalid")
         }
 
-    fun String.validHairColor(): Boolean =
-            this.length == 7 &&
-                    this[0] == '#' &&
-                    this.substring(1).toCharArray().filter { it.isDigit() || "abcdef".contains(it.toLowerCase()) }.size == 6
-
     @Test
     fun day4_2() {
-        val required = setOf("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid")
         val validators: Map<String, (String) -> Boolean> = mapOf(
                 "byr" to { it.toInt() in 1920..2002 },
                 "iyr" to { it.toInt() in 2010..2020 },
                 "eyr" to { it.toInt() in 2020..2030 },
                 "hgt" to { it.toHeight().isValid() },
-                "hcl" to { it.validHairColor() },
+                "hcl" to { "^#\\p{XDigit}{6}\$".toRegex().matches(it) },
                 "ecl" to { listOf("amb", "blu", "brn", "gry", "grn", "hzl", "oth").contains(it) },
-                "pid" to {it.length == 9 && it.filter(Char::isDigit).length == 9 })
+                "pid" to { "^\\d{9}$".toRegex().matches(it) })
 
         val validPasswords = File("Day 4/input").readText()
                 .replace("\n\n", "|")
@@ -175,7 +169,7 @@ class Solutions {
                             }.toSet()
                 }
                 .filter {
-                    it.containsAll(required)
+                    it.containsAll(validators.keys)
                 }
 
         println("Valid passwords ${validPasswords.size}")

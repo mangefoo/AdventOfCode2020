@@ -111,4 +111,73 @@ class Solutions {
 
         println("Trees hit: $total")
     }
+
+    @Test
+    fun day4_1() {
+        val required = setOf("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid")
+
+        val validPasswords = File("Day 4/input").readText()
+                .replace("\n\n", "|")
+                .replace("\n", " ")
+                .split("|")
+                .map {
+                    it.split(" ").map { it.split(":")[0] }.toSet()
+                }.filter { it.containsAll(required) }
+
+        println("Valid passwords ${validPasswords.size}")
+    }
+
+    data class Height(val height: Int, val scale: String) {
+        fun isValid(): Boolean =
+            when(scale) {
+                "cm" -> height in 150..193
+                "in" -> height in 59..76
+                else -> false
+            }
+    }
+
+    fun String.toHeight(): Height =
+        when {
+            endsWith("cm") -> Height(substring(0, length - 2).toInt(), "cm")
+            endsWith("in") -> Height(substring(0, length - 2).toInt(), "in")
+            else -> Height(0, "invalid")
+        }
+
+    fun String.validHairColor(): Boolean =
+            this.length == 7 &&
+                    this[0] == '#' &&
+                    this.substring(1).toCharArray().filter { it.isDigit() || "abcdef".contains(it.toLowerCase()) }.size == 6
+
+    @Test
+    fun day4_2() {
+        val required = setOf("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid")
+        val validators: Map<String, (String) -> Boolean> = mapOf(
+                "byr" to { it.toInt() in 1920..2002 },
+                "iyr" to { it.toInt() in 2010..2020 },
+                "eyr" to { it.toInt() in 2020..2030 },
+                "hgt" to { it.toHeight().isValid() },
+                "hcl" to { it.validHairColor() },
+                "ecl" to { listOf("amb", "blu", "brn", "gry", "grn", "hzl", "oth").contains(it) },
+                "pid" to {it.length == 9 && it.filter(Char::isDigit).length == 9 })
+
+        val validPasswords = File("Day 4/input").readText()
+                .replace("\n\n", "|")
+                .replace("\n", " ")
+                .split("|")
+                .map {
+                    it.split(" ")
+                            .map {
+                                it.split(":").let { it[0] to it[1] }
+                            }.filter {
+                                validators[it.first]?.invoke(it.second) ?: false
+                            }.map {
+                                it.first
+                            }.toSet()
+                }
+                .filter {
+                    it.containsAll(required)
+                }
+
+        println("Valid passwords ${validPasswords.size}")
+    }
 }

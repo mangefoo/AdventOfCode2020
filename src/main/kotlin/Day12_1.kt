@@ -1,9 +1,12 @@
-import java.io.File
+import kotlin.math.abs
 
-class Day12_1 {
+class Day12_1 : Puzzle() {
+
+    override val day = 12
+
     data class State(var lon: Int, var lat: Int, var dir: Char)
 
-    fun toDeg(dir: Char): Int =
+    private fun toDeg(dir: Char): Int =
             when (dir) {
                 'N' -> 0
                 'E' -> 90
@@ -12,10 +15,10 @@ class Day12_1 {
                 else -> throw IllegalStateException("Invalid direction $dir")
             }
 
-    fun toDir(deg: Int): Char =
+    private fun toDir(deg: Int): Char =
             "NESW"[((deg + 360) % 360) / 90]
 
-    fun actor(action: Char, arg: Int, state: State): State {
+    private fun actor(action: Char, arg: Int, state: State): State {
         when (action) {
             'N' -> state.lon += arg
             'S' -> state.lon -= arg
@@ -31,20 +34,17 @@ class Day12_1 {
     }
 
     fun run() {
-        val instr = File("Day 12/input")
-                .readLines()
+        val state = State(0, 0, 'E')
 
-        var state = State(0, 0, 'E')
-
-        instr.forEach {
+        lines("input").forEach {
             println("$it $state")
-            var action = it[0]
-            var arg = it.substring(1).toInt()
+            val action = it[0]
+            val arg = it.substring(1).toInt()
 
             actor(action, arg, state)
         }
 
-        println(Math.abs(state.lon) + Math.abs(state.lat))
+        println(abs(state.lon) + abs(state.lat))
     }
 }
 

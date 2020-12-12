@@ -1,36 +1,28 @@
-import java.io.File
-
 fun main(args: Array<String>) {
     Day12_2().run()
 }
 
-class Day12_2 {
+class Day12_2 : Puzzle() {
+
+    override val day = 12
 
     data class Waypoint(var lon: Int, var lat: Int)
     data class State(var lon: Int, var lat: Int, var waypoint: Waypoint)
 
-    fun toDir(degIn: Int, waypoint: Waypoint): Waypoint {
-        val deg = (degIn + 360) % 360
-        println("$degIn = $deg")
-
-        return when (deg) {
+    private fun toDir(degIn: Int, waypoint: Waypoint): Waypoint =
+        when ((degIn + 360) % 360) {
             90 -> Waypoint(-waypoint.lat, waypoint.lon)
             180 -> Waypoint(-waypoint.lon, -waypoint.lat)
             270 -> Waypoint(waypoint.lat, -waypoint.lon)
             else -> waypoint
         }
-    }
 
     fun run() {
-        val instr = File("Day 12/input")
-                .readLines()
+        val state = State(0, 0, Waypoint(1, 10))
 
-        var state = State(0, 0, Waypoint(1, 10))
-
-        instr.forEach {
-            println("$it $state")
-            var action = it[0]
-            var arg = it.substring(1).toInt()
+        lines("input").forEach {
+            val action = it[0]
+            val arg = it.substring(1).toInt()
 
             when (action) {
                 'N' -> state.waypoint.lon += arg
@@ -40,7 +32,7 @@ class Day12_2 {
                 'F' -> { state.lon += state.waypoint.lon * arg; state.lat += state.waypoint.lat * arg }
                 'L' -> state.waypoint = toDir(-arg, state.waypoint)
                 'R' -> state.waypoint = toDir(arg, state.waypoint)
-                else -> throw(IllegalStateException("asdf"))
+                else -> throw(IllegalStateException("Invalid action $action"))
             }
         }
 

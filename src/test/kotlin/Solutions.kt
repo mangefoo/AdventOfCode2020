@@ -515,4 +515,9 @@ class Solutions {
 
         println(variations(numbers))
     }
+
+    @Test
+    fun day11_1() {
+
+    }
 }

@@ -27,7 +27,7 @@ class Day12_1 : Puzzle() {
             'F' -> actor(state.dir, arg, state)
             'L' -> state.dir = toDir(toDeg(state.dir) - arg)
             'R' -> state.dir = toDir(toDeg(state.dir) + arg)
-            else -> throw(IllegalStateException("asdf"))
+            else -> throw(IllegalStateException("Invalid action $action"))
         }
 
         return state

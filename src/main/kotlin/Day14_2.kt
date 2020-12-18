@@ -14,9 +14,9 @@ class Day14_2 : Puzzle() {
         return generate(mask.drop(1)).map { listOf(mask[0] + it) }.flatten()
     }
 
-    private fun toBinaryString(value: Long): String =
+    private fun Long.toBinaryString(): String =
             (35 downTo 0).fold("") { acc, i ->
-                acc + if ((value and (1L shl i)) != 0L) "1" else "0"
+                acc + if ((this and (1L shl i)) != 0L) "1" else "0"
             }
 
     private fun combine(pos: String, mask: String): String =
@@ -30,7 +30,7 @@ class Day14_2 : Puzzle() {
             }
 
     fun run() {
-        val lines = lines("example2")
+        val lines = lines("input")
 
         var mask = "0".repeat(36)
         val mem = HashMap<Long, Long>()
@@ -40,7 +40,7 @@ class Day14_2 : Puzzle() {
 
             if (op.startsWith("mem")) {
                 val pos = op.filter(Char::isDigit).toLong()
-                val combined = combine(toBinaryString(pos), mask)
+                val combined = combine(pos.toBinaryString(), mask)
 
                 generate(combined)
                         .map { binString -> binString.toLong(2) }

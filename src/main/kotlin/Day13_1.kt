@@ -3,7 +3,7 @@ class Day13_1 : Puzzle() {
     override val day = 13
 
     fun run() {
-        val lines = lines("example")
+        val lines = lines("input")
         val time = lines[0].toInt()
         val schedules = lines[1].split(",")
                 .filter { it != "x" }

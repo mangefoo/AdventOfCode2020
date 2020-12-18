@@ -30,7 +30,7 @@ class Day16_2 : Puzzle() {
         val summary = columns.indices.map { colIndex ->
             val ranges = columnMatch(columns[colIndex], ranges)
             Pair(colIndex, ranges)
-        }.sortedBy { it.second.size }
+        }.sortedBy { it.second.size } // There's a pattern in the matching ranges where the number of matches is 1-20
 
         summary.forEach {
             if (it.second.isNotEmpty()) {

@@ -5,13 +5,13 @@ class Day17_2 : Puzzle() {
     var map: HashSet<List<Int>> = HashSet()
 
     private fun neighbours(x: Int, y: Int, z: Int, w: Int): List<List<Int>> {
-        var res = listOf<List<Int>>()
+        val res = mutableListOf<List<Int>>()
         for (xx in (x - 1)..(x + 1))
             for (yy in (y - 1)..(y + 1))
                 for (zz in (z - 1)..(z + 1))
                     for (ww in (w - 1)..(w + 1))
                         if (xx != x || yy != y || zz != z || ww != w)
-                            res += listOf(listOf(xx, yy, zz, ww))
+                            res.add(listOf(xx, yy, zz, ww))
         return res
     }
 
